@@ -5,8 +5,8 @@ from langchain.document_loaders.pdf import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
 from get_embedding_function import get_embedding_function
-#from langchain_community.vectorstores import Chroma
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import Chroma
+#from langchain_chroma import Chroma
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
@@ -39,6 +39,7 @@ def split_documents(documents: list[Document]):
         length_function=len,
         is_separator_regex=False,
     )
+
     return text_splitter.split_documents(documents)
 
 
@@ -55,6 +56,8 @@ def add_to_chroma(chunks: list[Document]):
     existing_items = db.get(include=[])  # IDs are always included by default
     existing_ids = set(existing_items["ids"])
     print(f"Number of existing documents in DB: {len(existing_ids)}")
+
+    print(f"0-th chunk : {chunks[0]}")
 
     # Only add documents that don't exist in the DB.
     new_chunks = []
